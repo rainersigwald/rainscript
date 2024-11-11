@@ -1,0 +1,26 @@
+@model List<build_analysis.Models.ToDoItem>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ToDo List</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src=""></script>
+</head>
+<body>
+    <h1>ToDo List</h1>
+    <ul id="todo-list">
+        @foreach (var item in Model)
+        {
+            <li data-id="@item.Id">
+                <span>@item.Name</span>
+                <input type="checkbox" @(item.IsComplete ? "checked" : "") />
+                <button class="delete-btn">Delete</button>
+            </li>
+        }
+    </ul>
+    <input type="text" id="new-todo-name" placeholder="New ToDo" />
+    <button id="add-btn">Add</button>
+    <script src="~/js/todo/index.js" asp-append-version="true"></script>
+</body>
+</html>
