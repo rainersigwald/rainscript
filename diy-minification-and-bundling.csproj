@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -9,39 +9,17 @@
     <RollForward>LatestMajor</RollForward>
   </PropertyGroup>
 
-  <ItemGroup Label="Things Needed to Enable MVC for Normal Console Apps">
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="9.0.0-rc.2.24474.3" />
-    <Content Include="Views/**/*.*" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
-    <Content Include="wwwroot/**/*.*" Exclude="wwwroot/js/*" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
-    <!-- Note: no CopyToPublishDirectory for the JS files here because we want to minify this as part of publishing -->
-    <Content Include="wwwroot/js/**/*.js" Exclude="wwwroot/js/**/*.min.js" CopyToOutputDirectory="PreserveNewest" />
-    <Clean Include="wwwroot/js/**/*.min.js" />
+  <ItemGroup>
+    <Content Remove="wwwroot/js/**" />
   </ItemGroup>
 
-
-  <Target Name="ComputeJSFiles">
-   <ItemGroup>
-    <JSInputFiles Include="wwwroot/js/**/*.js" Exclude="wwwroot/js/**/*.min.js" />
-   </ItemGroup>
-  </Target>
-  
-  <Target Name="MinifyJS" BeforeTargets="PrepareForPublish" DependsOnTargets="ComputeJSFiles" Inputs="@(JSInputFiles)" Outputs="%(RelativeDir)%(FileName).min.js">
-    
-    <Exec Command="minify '@(JSInputFiles)" ConsoleToMsBuild="True" >
-      <Output TaskParameter="ConsoleOutput" ItemName="MinifiedJS" />
-    </Exec>
-    
-    <WriteLinesToFile File="@(JSInputFiles->'%(RelativeDir)%(FileName).min.js')" Lines="@(MinifiedJS)" />
-
+  <Target Name="CompileRainScript" BeforeTargets="BeforeBuild">
     <ItemGroup>
-      <JSOutputFiles Include="@(JSInputFiles-> '%(RelativeDir)%(FileName).min.js')" />
-      <FileWrites Include="@(JSOutputFiles)" />
-      <ResolvedFileToPublish Include="@(JSOutputFiles)"
-        RelativePath="%(RelativeDir)%(FileName)%(Extension)"
-        CopyToPublishDirectory="PreserveNewest" />
+      <_RainScriptFiles Include="wwwroot/rns/**/*.rns" />
     </ItemGroup>
-
+    <Copy SourceFiles="@(_RainScriptFiles)" DestinationFiles="@(_RainScriptFiles -> 'wwwroot/js/%(Filename).js')" />
+    <ItemGroup>
+      <Content Include="wwwroot/js/site.js" TargetPath="wwwroot/js/site.js" />
+    </ItemGroup>
   </Target>
-
 </Project>

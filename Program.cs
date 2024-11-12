@@ -4,9 +4,10 @@ using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
+builder.Services.AddAuthentication();
+builder.Services.AddAuthorization();
+builder.Services.AddControllersWithViews();
 // Add services to the container.
-builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
