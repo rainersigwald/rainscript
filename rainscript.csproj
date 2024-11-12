@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <_RainScriptSourceFiles Include="wwwroot/rns/**/*.rns" />
+    <Clean Include="wwwroot/js/**/*.js" />
   </ItemGroup>
 
   <Target Name="CompileRainScript" BeforeTargets="BeforeBuild" Inputs="@(_RainScriptSourceFiles)" Outputs="@(_RainScriptSourceFiles -> 'wwwroot/js/%(Filename).js')">
@@ -22,7 +23,7 @@
       <_TranspiledJSSourceFiles Include="@(_RainScriptSourceFiles -> 'wwwroot/js/%(Filename).js')" />
     </ItemGroup>
     <ItemGroup>
-      <Content Include="@(_TranspiledJSSourceFiles)" TargetPath="@(_TranspiledJSSourceFiles)" />
+      <Content Include="@(_TranspiledJSSourceFiles)" TargetPath="%(_TranspiledJSSourceFiles.Identity)" />
     </ItemGroup>
   </Target>
 </Project>
