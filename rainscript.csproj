@@ -6,20 +6,23 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>rainscript</RootNamespace>
     <OutputType>Exe</OutputType>
-    <RollForward>LatestMajor</RollForward>
   </PropertyGroup>
 
   <ItemGroup>
     <Content Remove="wwwroot/js/**" />
   </ItemGroup>
 
-  <Target Name="CompileRainScript" BeforeTargets="BeforeBuild">
+  <ItemGroup>
+    <_RainScriptSourceFiles Include="wwwroot/rns/**/*.rns" />
+  </ItemGroup>
+
+  <Target Name="CompileRainScript" BeforeTargets="BeforeBuild" Inputs="@(_RainScriptSourceFiles)" Outputs="@(_RainScriptSourceFiles -> 'wwwroot/js/%(Filename).js')">
+    <Copy SourceFiles="@(_RainScriptSourceFiles)" DestinationFiles="@(_RainScriptSourceFiles -> 'wwwroot/js/%(Filename).js')" />
     <ItemGroup>
-      <_RainScriptFiles Include="wwwroot/rns/**/*.rns" />
+      <_TranspiledJSSourceFiles Include="@(_RainScriptSourceFiles -> 'wwwroot/js/%(Filename).js')" />
     </ItemGroup>
-    <Copy SourceFiles="@(_RainScriptFiles)" DestinationFiles="@(_RainScriptFiles -> 'wwwroot/js/%(Filename).js')" />
     <ItemGroup>
-      <Content Include="wwwroot/js/site.js" TargetPath="wwwroot/js/site.js" />
+      <Content Include="@(_TranspiledJSSourceFiles)" TargetPath="@(_TranspiledJSSourceFiles)" />
     </ItemGroup>
   </Target>
 </Project>
