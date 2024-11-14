@@ -8,22 +8,4 @@
     <OutputType>Exe</OutputType>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Content Remove="wwwroot/js/**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_RainScriptSourceFiles Include="wwwroot/rns/**/*.rns" />
-    <Clean Include="wwwroot/js/**/*.js" />
-  </ItemGroup>
-
-  <Target Name="CompileRainScript" BeforeTargets="BeforeBuild" Inputs="@(_RainScriptSourceFiles)" Outputs="@(_RainScriptSourceFiles -> 'wwwroot/js/%(Filename).js')">
-    <Copy SourceFiles="@(_RainScriptSourceFiles)" DestinationFiles="@(_RainScriptSourceFiles -> 'wwwroot/js/%(Filename).js')" />
-    <ItemGroup>
-      <_TranspiledJSSourceFiles Include="@(_RainScriptSourceFiles -> 'wwwroot/js/%(Filename).js')" />
-    </ItemGroup>
-    <ItemGroup>
-      <Content Include="@(_TranspiledJSSourceFiles)" TargetPath="%(_TranspiledJSSourceFiles.Identity)" />
-    </ItemGroup>
-  </Target>
 </Project>
