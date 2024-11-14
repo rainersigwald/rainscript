@@ -10,6 +10,10 @@
     <_UpdatescriptSourceFiles Include="wwwroot/ups/**/*.ups" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Remove="wwwroot/js/**" />
+  </ItemGroup>
+
   <Target Name="CompileUpdateScript" 
           BeforeTargets="BeforeBuild">
     <Copy SourceFiles="@(_UpdatescriptSourceFiles)"
