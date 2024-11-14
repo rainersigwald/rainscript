@@ -6,4 +6,14 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <_UpdatescriptSourceFiles Include="wwwroot/ups/**/*.ups" />
+  </ItemGroup>
+
+  <Target Name="CompileUpdateScript" 
+          BeforeTargets="BeforeBuild">
+    <Copy SourceFiles="@(_UpdatescriptSourceFiles)"
+          DestinationFiles="@(_UpdatescriptSourceFiles -> 'wwwroot/js/%(Filename).js')" />
+  </Target>
+
 </Project>
