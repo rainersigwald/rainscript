@@ -14,6 +14,11 @@
           BeforeTargets="BeforeBuild">
     <Copy SourceFiles="@(_UpdatescriptSourceFiles)"
           DestinationFiles="@(_UpdatescriptSourceFiles -> 'wwwroot/js/%(Filename).js')" />
+
+    <ItemGroup>
+      <_TranspiledJSSourceFiles Include="@(_UpdatescriptSourceFiles -> 'wwwroot/js/%(Filename).js')" />
+      <Content Include="@(_TranspiledJSSourceFiles)" />
+    </ItemGroup>
   </Target>
 
 </Project>
