@@ -10,9 +10,14 @@
     <UpdatescriptSourceFile Include="wwwroot/ups/**/*.ups" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <DefaultItemExcludes>$(DefaultItemExcludes);wwwroot/ups/**/*.ups</DefaultItemExcludes>
+  </PropertyGroup>
+
   <ItemGroup>
     <_TranspiledJSSourceFiles Include="@(UpdatescriptSourceFile -> 'wwwroot/js/%(Filename).js')" />
     <Content Remove="@(_TranspiledJSSourceFiles)" />
+    <None Include="@(UpdatescriptSourceFile)" />
     <Clean Include="@(_TranspiledJSSourceFiles)" />
   </ItemGroup>
 
