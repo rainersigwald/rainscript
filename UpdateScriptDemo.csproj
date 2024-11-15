@@ -16,8 +16,10 @@
 
   <ItemGroup>
     <_TranspiledJSSourceFiles Include="@(UpdatescriptSourceFile -> 'wwwroot/js/%(Filename).js')" />
+
     <Content Remove="@(_TranspiledJSSourceFiles)" />
     <None Include="@(UpdatescriptSourceFile)" />
+
     <Clean Include="@(_TranspiledJSSourceFiles)" />
     <Clean Include="wwwroot/js/**/*.js" /><!-- Clean up any leftover files that are now deleted-->
   </ItemGroup>
