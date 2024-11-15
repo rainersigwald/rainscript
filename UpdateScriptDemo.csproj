@@ -16,7 +16,9 @@
   </ItemGroup>
 
   <Target Name="CompileUpdateScript"
-          BeforeTargets="BeforeBuild">
+          BeforeTargets="BeforeBuild"
+          Inputs="@(UpdatescriptSourceFile)"
+          Outputs="@(UpdatescriptSourceFile -> 'wwwroot/js/%(Filename).js')">
     <Copy SourceFiles="@(UpdatescriptSourceFile)"
           DestinationFiles="@(UpdatescriptSourceFile -> 'wwwroot/js/%(Filename).js')" />
 
