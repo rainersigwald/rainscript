@@ -11,19 +11,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot/js/**" />
-    <Clean Include="wwwroot/js/**/*.js" />
+    <_TranspiledJSSourceFiles Include="@(UpdatescriptSourceFile -> 'wwwroot/js/%(Filename).js')" />
+    <Content Remove="@(_TranspiledJSSourceFiles)" />
+    <Clean Include="@(_TranspiledJSSourceFiles)" />
   </ItemGroup>
 
   <Target Name="CompileUpdateScript"
           BeforeTargets="BeforeBuild"
           Inputs="@(UpdatescriptSourceFile)"
-          Outputs="@(UpdatescriptSourceFile -> 'wwwroot/js/%(Filename).js')">
+          Outputs="@(_TranspiledJSSourceFiles)">
     <Copy SourceFiles="@(UpdatescriptSourceFile)"
-          DestinationFiles="@(UpdatescriptSourceFile -> 'wwwroot/js/%(Filename).js')" />
+          DestinationFiles="@(_TranspiledJSSourceFiles)" />
 
     <ItemGroup>
-      <_TranspiledJSSourceFiles Include="@(UpdatescriptSourceFile -> 'wwwroot/js/%(Filename).js')" />
       <Content Include="@(_TranspiledJSSourceFiles)" />
     </ItemGroup>
   </Target>
