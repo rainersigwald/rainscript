@@ -7,7 +7,7 @@ function createGradientBackground() {
 
     function updateBackground() {
         angle = (angle + 1) % 360;
-        body.style.background = `linear-gradient(${angle}deg, #ff7e5f, #feb47b)`;
+        body.style.background = `linear-gradient(${angle}deg, #f1b03d, white)`;
         requestAnimationFrame(updateBackground);
     }
 
