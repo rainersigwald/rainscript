@@ -1,0 +1,21 @@
+Stages:
+
+0. normal web sdk project
+1. want to use hot new frontend language, but need to compile to JS to run in the browser
+   * rns file shows in solution explorer and is part of build output (not usable because browsers don't know about rns)
+1. create a task to transpile a file
+   * js files created for each rns file?
+   * where do we create them? 
+     * put them in the js folder?
+2. js files not in build output, so breaks when deployed
+   * Set as Content, target path, etc. with CopytoOutputDirectory metadata
+3. now we have duplicate file errors
+   * remove js files in wwwroot from Content
+4. how to do it for all rainscript files?
+    * input globs on the Copy and Content item creations
+5. we're re-doing a lot of work?
+    * Inputs and Outputs!
+6. 
+
+
+
