@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <_UpdatescriptSourceFiles Include="wwwroot/ups/**/*.ups" />
+    <UpdatescriptSourceFile Include="wwwroot/ups/**/*.ups" />
   </ItemGroup>
 
   <ItemGroup>
@@ -15,13 +15,13 @@
     <Clean Include="wwwroot/js/**/*.js" />
   </ItemGroup>
 
-  <Target Name="CompileUpdateScript" 
+  <Target Name="CompileUpdateScript"
           BeforeTargets="BeforeBuild">
-    <Copy SourceFiles="@(_UpdatescriptSourceFiles)"
-          DestinationFiles="@(_UpdatescriptSourceFiles -> 'wwwroot/js/%(Filename).js')" />
+    <Copy SourceFiles="@(UpdatescriptSourceFile)"
+          DestinationFiles="@(UpdatescriptSourceFile -> 'wwwroot/js/%(Filename).js')" />
 
     <ItemGroup>
-      <_TranspiledJSSourceFiles Include="@(_UpdatescriptSourceFiles -> 'wwwroot/js/%(Filename).js')" />
+      <_TranspiledJSSourceFiles Include="@(UpdatescriptSourceFile -> 'wwwroot/js/%(Filename).js')" />
       <Content Include="@(_TranspiledJSSourceFiles)" />
     </ItemGroup>
   </Target>
